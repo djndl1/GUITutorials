@@ -12,3 +12,4 @@ add_compile_options(-DUNICODE -D_UNICODE -municode)
 add_link_options(-municode)
 
 add_executable(HelloWindows src/HelloWindows.c)
+add_executable(FirstWindow src/FirstWindow.c)
