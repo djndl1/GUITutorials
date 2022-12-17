@@ -8,8 +8,10 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
+include_directories(include)
 add_compile_options(-DUNICODE -D_UNICODE -municode)
 add_link_options(-municode)
 
 add_executable(HelloWindows src/HelloWindows.c)
 add_executable(FirstWindow src/FirstWindow.c)
+add_executable(SysMets src/SysMets.c)
