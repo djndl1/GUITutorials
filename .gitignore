@@ -350,5 +350,6 @@ MigrationBackup/
 .ionide/
 
 Win32GUI/build
+MFC/build
 Win32GUI/compile_commands.json
 Win32GUI/.vscode/settings.json
