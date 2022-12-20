@@ -356,3 +356,4 @@ Win32GUI/.vscode/settings.json
 
 WTL/build
 WTL/compile_commands.json
+WTL/.vscode/settings.json
