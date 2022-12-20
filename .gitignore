@@ -352,3 +352,7 @@ MigrationBackup/
 Win32GUI/build
 Win32GUI/compile_commands.json
 Win32GUI/.vscode/settings.json
+
+
+WTL/build
+WTL/compile_commands.json
