@@ -357,3 +357,7 @@ Win32GUI/.vscode/settings.json
 WTL/build
 WTL/compile_commands.json
 WTL/.vscode/settings.json
+
+GTK/gtk_c/build
+GTK/gtk_c/compile_commands.json
+GTK/gtk_c/.vscode/settings.json
