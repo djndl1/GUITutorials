@@ -17,27 +17,28 @@ endif()
 add_compile_options(${GLIB2_CFLAGS})
 link_libraries(${GLIB2_LIBRARIES})
 
-add_executable(helloworld_gtk helloworld.c)
-add_executable(button_gtk button.c)
-add_executable(exercise2.2 exercise2.2.c)
-add_executable(gtkbox gtkbox.c)
-add_executable(gtkpane panes.c)
-add_executable(gtkgrid tables.c)
-add_executable(gtkfixed fixed.c)
-add_executable(gtkexpander expander.c)
-add_executable(gtknotebook notebook.c)
-add_executable(exercise3.1 exercise3.1.c)
+# tests
+include(FetchContent)
 
-add_executable(gtkradiobutton radiobuttons.c)
-add_executable(gtkentry entry.c)
-add_executable(gtkdialog SimpleDialog.c)
-add_executable(gtkmsg MessageDialog.c)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG release-1.12.1
+)
+FetchContent_MakeAvailable(googletest)
 
-add_executable(gtimeout timeouts.c)
+enable_testing()
+add_executable(glib_basics src/glib/basics.cc)
+target_link_libraries(glib_basics GTest::gtest_main)
 
-add_executable(exercise6.1 exercise6.1.c)
-add_executable(exercise6.2 exercise6.2.c)
+add_executable(glib_logging src/glib/logging.cc)
+target_link_libraries(glib_logging GTest::gtest_main)
 
-add_executable(scrolledwindow scrolledwindows.c)
-add_executable(textview textview2.c)
-add_executable(iterator iterator.c)
+add_executable(glib_environment src/glib/environment.cc)
+target_link_libraries(glib_environment GTest::gtest_main)
+
+include(GoogleTest)
+
+gtest_discover_tests(glib_basics)
+gtest_discover_tests(glib_logging)
+gtest_discover_tests(glib_environment)
