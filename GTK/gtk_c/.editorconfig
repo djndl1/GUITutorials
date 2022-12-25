@@ -11,5 +11,8 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = false
 
-[*.cc]
+[*.c]
+indent_size = 2
+
+[*.{cc,cpp,cxx}]
 indent_size = 2
