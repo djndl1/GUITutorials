@@ -72,8 +72,12 @@ target_link_libraries(glib_logging GTest::gtest_main)
 add_executable(glib_environment src/glib/environment.cc)
 target_link_libraries(glib_environment GTest::gtest_main)
 
+add_executable(glib_memory src/glib/memory.cc)
+target_link_libraries(glib_memory GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(glib_basics)
 gtest_discover_tests(glib_logging)
 gtest_discover_tests(glib_environment)
+gtest_discover_tests(glib_memory)
