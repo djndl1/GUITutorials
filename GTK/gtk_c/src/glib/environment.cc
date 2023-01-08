@@ -15,6 +15,23 @@ TEST (ENV, CWD)
   EXPECT_STREQ (current_path.c_str (), cwd);
 }
 
+TEST(TIMER, TIMER)
+{
+  GTimer *timer = g_timer_new();
+  g_timer_start(timer);
+
+  g_usleep(2 * G_USEC_PER_SEC);
+
+  g_timer_stop(timer);
+
+  gdouble elapsed = g_timer_elapsed(timer, NULL);
+
+  EXPECT_GE(elapsed, 2);
+
+  g_timer_destroy(timer);
+  timer = NULL;
+}
+
 TEST (TIME, REAL_TIME)
 {
   gint64 current_timestamp = g_get_real_time (); // UTC time
