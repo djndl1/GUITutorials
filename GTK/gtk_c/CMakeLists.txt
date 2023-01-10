@@ -84,6 +84,9 @@ target_link_libraries(glib_utilities GTest::gtest_main)
 add_executable(glib_threading src/glib/threading.cc)
 target_link_libraries(glib_threading GTest::gtest_main)
 
+add_executable(glib_string src/glib/string.cc)
+target_link_libraries(glib_string GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(glib_basics)
@@ -91,3 +94,4 @@ gtest_discover_tests(glib_logging)
 gtest_discover_tests(glib_environment)
 gtest_discover_tests(glib_memory)
 gtest_discover_tests(glib_error)
+gtest_discover_tests(glib_string)
