@@ -8,10 +8,21 @@ static void destroy(GtkWidget *widget, gpointer data) {
   g_debug("Destroying the main window\n");
   gtk_main_quit();
 }
+
 static gboolean delete_event(GtkWidget *widget, GdkEvent *event,
                              gpointer data) {
   g_debug("Deleting the main window\n");
-  return FALSE;
+
+  GtkWidget *dialog = gtk_dialog_new_with_buttons("Staying?",
+                                                  GTK_WINDOW(widget),
+                                                  GTK_DIALOG_MODAL,
+                                                  "_Yes", GTK_RESPONSE_ACCEPT,
+                                                  "_No", GTK_RESPONSE_REJECT,
+                                                  NULL);
+  gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+  gtk_widget_destroy(dialog);
+
+  return response == GTK_RESPONSE_ACCEPT;
 }
 
 static gboolean key_press_callback(GtkWidget *widget, GdkEventKey *event,
@@ -25,7 +36,7 @@ static gboolean key_press_callback(GtkWidget *widget, GdkEventKey *event,
     }
     previous = g_strdup(label_text);
 
-    gtk_label_set_text(GTK_LABEL(user_data), "My Name");
+    gtk_label_set_markup(GTK_LABEL(user_data), "<i>My Name</i>");
     gtk_window_set_title(GTK_WINDOW(widget), "Deng Hongzhi");
     pressed = TRUE;
     return TRUE;
