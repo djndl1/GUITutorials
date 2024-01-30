@@ -3,8 +3,8 @@
 #undef G_LOG_DOMAIN
 #define G_LOG_DOMAIN "gtk_c.button"
 
-static void destroy(GtkWidget *widget, gpointer data) { gtk_main_quit(); }
-static gboolean delete_event(GtkWidget *widget, GdkEvent *event,
+static void on_window_destroy(GtkWidget *widget, gpointer data) { gtk_main_quit(); }
+static gboolean on_window_delete_event(GtkWidget *widget, GdkEvent *event,
                              gpointer data) {
   return FALSE;
 }
@@ -20,8 +20,8 @@ int main(int argc, char *argv[]) {
                               100);  // sets the minimum size of a widget
   gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
 
-  g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(destroy), NULL);
-  g_signal_connect(G_OBJECT(window), "delete-event", G_CALLBACK(delete_event),
+  g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(on_window_destroy), NULL);
+  g_signal_connect(G_OBJECT(window), "delete-event", G_CALLBACK(on_window_delete_event),
                    NULL);
 
   GtkWidget *closeButton = gtk_button_new_with_mnemonic("_Close");
