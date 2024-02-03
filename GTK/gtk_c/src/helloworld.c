@@ -25,6 +25,19 @@ static gboolean delete_event(GtkWidget *widget, GdkEvent *event,
   return response == GTK_RESPONSE_ACCEPT;
 }
 
+static void on_window_title_notify(GObject *gobject,
+                                   GParamSpec *pspec,
+                                   gpointer user_data)
+{
+  gchar *title = NULL;
+  g_object_get(gobject, "title", &title, NULL);
+  g_message("window %s set: %s",
+            g_param_spec_get_name(pspec),
+            title);
+
+  g_free(title);
+}
+
 static gboolean key_press_callback(GtkWidget *widget, GdkEventKey *event,
                                    GtkWidget *user_data) {
   static gboolean pressed = FALSE;
@@ -36,12 +49,13 @@ static gboolean key_press_callback(GtkWidget *widget, GdkEventKey *event,
     }
     previous = g_strdup(label_text);
 
-    gtk_label_set_markup(GTK_LABEL(user_data), "<i>My Name</i>");
-    gtk_window_set_title(GTK_WINDOW(widget), "Deng Hongzhi");
+    g_object_set(GTK_LABEL(user_data), "use-markup", TRUE, NULL);
+    g_object_set(GTK_LABEL(user_data), "label", "<i>My Name</i>", NULL);
+    g_object_set(widget, "title", "Deng Hongzhi", NULL);
     pressed = TRUE;
     return TRUE;
   } else if (event->keyval == GDK_KEY_F1 && pressed && previous != NULL) {
-    gtk_label_set_text(GTK_LABEL(user_data), previous);
+    g_object_set(GTK_LABEL(user_data), "label", previous, NULL);
     pressed = FALSE;
 
     return TRUE;
@@ -58,15 +72,17 @@ int main(int argc, char *argv[]) {
   // top level windows got WM decorations and a border frame, managed by the WM
   // any window visually seen as a window should be a top level window.
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(window), "Hans Meyer");
+  g_object_set(window, "title", "Hans Meyer", NULL);
   gtk_container_set_border_width(GTK_CONTAINER(window), 10);
   gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
-  gtk_widget_set_size_request(window, 300,
-                              100);  // sets the minimum size of a widget
+  // sets the minimum size of a widget
+  g_object_set(window, "height-request", 100, NULL);
+  g_object_set(window, "width-request", 300, NULL);
 
   g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(destroy), NULL);
   g_signal_connect(G_OBJECT(window), "delete-event", G_CALLBACK(delete_event),
                    NULL);
+  g_signal_connect(G_OBJECT(window), "notify::title", G_CALLBACK(on_window_title_notify), NULL);
 
   // often used to label other widgets, but also to create large blocks of
   // uneditable, formatted or wrapped text
